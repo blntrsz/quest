@@ -1,42 +1,45 @@
 ---
 name: reflect
-description: Read a finished piece of work, the current chat, a PR, or a ticket, and turn each problem it exposed into a guard the next run obeys without being told: a format, lint, ast-grep, or architecture rule, or a standard under docs/agents/coding-standards. Proposes every guard and waits for approval before creating it. Use after finishing work, for a retrospective, or when the user asks to reflect on a chat, a PR, or a ticket.
+description: Read a finished piece of work, the current chat, a PR, a ticket, or a decision-quest chat, and turn it into what lasts: guards the next run obeys without being told, such as a format, lint, ast-grep, or architecture rule, plus the domain concepts and business rules for docs/concepts.md and any ADR the decisions earn. Proposes every guard and document, and waits for approval before creating it. Use after finishing work, for a retrospective, or when the user asks to reflect on a chat, a PR, a ticket, or a decision-quest.
 ---
 
 # Reflect
 
-Reflection reads a finished piece of work and makes the problems it exposed impossible in the next run. It points backward at a chat, a PR, or a ticket. It ends forward with rules that catch those problems automatically. It writes the rules and never rewrites the past work.
+Reflection reads a finished piece of work and writes down what it settled: guards that make repeat problems impossible, and the domain knowledge the next run inherits. It points backward at a chat, a PR, a ticket, or a decision-quest chat. It writes the rules and the docs, and it never rewrites the past work.
 
-The unit is the **guard**: a rule that fails before a human has to notice the problem. A guard earns its place when the problem can recur and a machine can catch it. A reflection ends with the guards it created, or a plain report that none was warranted.
+The first unit is the **guard**: a rule that fails before a human notices the problem. The second is the **concept**: a domain term and the business rules that constrain it. A guard earns its place when the problem can recur and a machine can catch it. A concept earns its place when the work settled it and a newcomer would misread it. A reflection ends with the guards and docs it created, or a plain report that none was warranted.
 
 ## Operating rules
 
 - **Stay in the session.** The approval gate needs the user here, and the current chat is only visible here. Do not hand this to a background agent.
-- **Propose, then wait.** Every guard is a proposal the user approves before it exists. Present each one, and wait for the answer. Never add a rule the user did not approve.
+- **Propose, then wait.** Every guard and every document is a proposal the user approves before it exists. Present them, and wait for the answer. Create nothing the user did not approve.
+- **Only settled knowledge.** Write a concept or a rule only when the work settled it. An open question goes back to the user, never into `docs/concepts.md`.
 - **Prefer the guard that fails the build.** A linter that exits non-zero beats a document the next agent may not read.
 - **Prove the guard fires.** Run each new guard against the code from the reflected work. A guard that does not fail on the original problem is not a guard yet.
-- **The past work is read-only.** Do not fix the code you reflect on. Reflection fixes the rules that let the problem through.
+- **The past work is read-only.** Do not fix the code you reflect on. Reflection fixes the rules and records the knowledge the work left behind.
 
 ## 1. Take the target
 
-Ask what to reflect on when the user did not say. The target is one of three:
+Ask what to reflect on when the user did not say. The target is one of four:
 
 - **The current chat.** The conversation is already in context.
 - **A PR.** Fetch it.
 - **A ticket.** Fetch it.
+- **A decision-quest chat.** The grilling conversation from the **decision-quest** quest. The ticket carries the agreed design and the chat carries the reasoning. Fetch both.
 
-Resolve a PR or a ticket through `docs/agents/issue-tracker.md` when the repo has one, or through the tracker's own tooling, such as `gh` or `glab`. Stop and say so when the target does not resolve.
+Resolve a PR, a ticket, or a quest through `docs/agents/issue-tracker.md` when the repo has one, or through the tracker's own tooling, such as `gh` or `glab`. Stop and say so when the target does not resolve.
 
-## 2. Gather the work and its feedback
+## 2. Gather the work and its evidence
 
-The target names the work. Its feedback is where preventable problems show up. Pull every source the target reaches:
+The target names the work. Its evidence is where the guards and the concepts come from. Pull every source the target reaches:
 
 - **The change.** The diff, the commits, and the files they touch.
 - **The intent.** The ticket body, the spec, or the plan, so a mistake stays distinct from a deliberate choice.
 - **Human feedback.** PR review comments, ticket comments, and every place in the chat where the user corrected the agent or the work was redone.
 - **Machine feedback.** Failed CI checks, test failures, and the fixes that followed.
+- **Settled decisions.** From a decision-quest, the agreed design, the rejected alternatives, the assumptions, and the remaining risks that its final step recorded on the ticket.
 
-For a chat, the feedback sits in the conversation and in the artifacts it produced. Search the tracker for the PR and the ticket the chat created, then pull their comments too. When the user points at a PR, look for the ticket behind it, and the reverse.
+For a chat, the evidence sits in the conversation and in the artifacts it produced. Search the tracker for the PR and the ticket the chat created, then pull their comments too. When the user points at a PR, look for the ticket behind it, and the reverse. When the user points at a decision-quest, follow it to its ticket and to the PR that implemented the design.
 
 ## 3. Name every preventable problem
 
@@ -64,18 +67,35 @@ Take the first mechanism that can express the rule, in this order:
 
 Prefer a mechanism the repo already runs. Adding a tool costs more than adding a rule to a tool already in CI. Read the existing configs and the standards directory first, and match their naming and structure.
 
-## 5. Propose the guards, and wait
+## 5. Extract the domain knowledge
 
-Present one row per guard:
+The work settled things about the domain, not only about the code. Read the material for concepts, rules, and decisions:
+
+- **Concepts.** Terms the work used with a meaning a newcomer would misread: an entity, a state, a role, a status, an event. Record the term and its meaning in one line, in the words the work used.
+- **Business rules.** Constraints the work stated or enforces, such as "an order cannot ship before payment" or "only the owner can cancel". Record the rule and where it came from.
+- **Decisions.** From a decision-quest or any design discussion, the choices that were made. Offer an ADR for a choice only when it passes all three tests: hard to reverse, surprising without context, and the result of a real trade-off. Load the **domain-modeling** skill for its ADR format and its glossary rules.
+
+Cross-check each concept and rule against the code. When the code contradicts a stated rule, surface it and ask, rather than writing the doc.
+
+A rule the code can violate silently needs a guard as well as an entry: a test that locks the rule. Add it to the guard list from step 3, and pick its mechanism as in step 4. A rule nothing can check stays a doc entry alone.
+
+## 6. Propose everything, and wait
+
+Present the guards in one table:
 
 | Problem | Evidence | Guard | Where it goes |
 |---------|----------|-------|---------------|
 
-Under the table, give the exact rule for each guard: the config diff, the ast-grep pattern, or the doc's title and first line. A reviewer who asks for the same rename twice becomes a naming rule in the linter. State which mechanism could not express a problem you set aside, and why.
+Then the domain knowledge in another:
 
-Then wait. Take the user's yes or no on each guard before you create anything.
+| Concept or decision | What the work settled | Proposal | Where it goes |
+|---------------------|-----------------------|----------|---------------|
 
-## 6. Create the approved guards
+Under each table, give the exact form: the config diff, the ast-grep pattern, the doc's title and first line, or the ADR's decision. A reviewer who asks for the same rename twice becomes a naming rule in the linter. State which mechanism could not express a problem you set aside, and why.
+
+Then wait. Take the user's yes or no on each guard and each document before you create anything.
+
+## 7. Create the approved guards
 
 For each approved guard:
 
@@ -84,8 +104,15 @@ For each approved guard:
 3. Confirm the guard runs on a normal change: in CI, in a pre-commit hook, or in the check the next agent already runs. A rule nobody runs is not a guard.
 4. For a coding standard, confirm `AGENTS.md` or the agents doc points at the file. A standard nothing reaches is not a guard either.
 
-## 7. Report
+## 8. Write the approved concepts and ADRs
 
-Report what you created, what you rejected and why, and what was already in place. Name each guard, its mechanism, and its path. Name any problem left unguarded.
+1. Write each approved concept and rule into `docs/concepts.md`. Give the term, its one-line meaning, and the rules under it. Keep implementation detail out, and match the file's shape when it already exists.
+2. Give each entry its source: the PR, the ticket, or the decision-quest. A reader can trace why the term exists.
+3. Write each approved ADR under `docs/adr/`, using the **domain-modeling** skill's format.
+4. Confirm each term comes from the work and the code. A term you invented is not the project's language.
 
-Done when every gathered source has been read, every preventable problem is either an approved guard that fires on the original code or a stated reason it stays unguarded, and the user has seen the result.
+## 9. Report
+
+Report what you created, what you rejected and why, and what was already in place. Name each guard, its mechanism, and its path. Name each concept, rule, and ADR. Name any problem or open question left for the user.
+
+Done when every gathered source has been read, every preventable problem is either an approved guard that fires on the original code or a stated reason it stays unguarded, every settled concept and rule is in `docs/concepts.md` or is a named open question, and the user has seen the result.
