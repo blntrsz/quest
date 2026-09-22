@@ -1,0 +1,33 @@
+---
+name: quest
+description: Create and execute a Quest.
+disable-model-invocation: true
+---
+
+A **Quest** is one objective, filed as a ticket on this repo's issue tracker. Its **quest type** selects a **runbook** — a procedure shipped in this skill's `quests/` folder — and executing the quest means following that runbook in order.
+
+The ticket is the instance (this objective, this repo). The runbook is the method (how every quest of that type runs). One skill, two acts: **run** a quest from its ticket, or **create** one.
+
+## Quest type and runbook
+
+A runbook is `quests/<name>.md`, and `<name>` is the quest type: `quests/decision-quest.md` is type `decision-quest`. A ticket declares its type with the label `quest:<name>`.
+
+**How a ticket is created, fetched, and completed is tracker-specific.** The issue tracker should have been provided to you in `docs/agents/issue-tracker.md`. If it hasn't, stop and tell the user to run `/setup-adventure`. Read that doc before touching the tracker; its **Quest operations** section is the authority on this repo's mechanics.
+
+## Run a quest
+
+Invoked with a ticket link (or number/path).
+
+1. **Fetch the ticket**, per the tracker doc.
+2. **Resolve its runbook.** Read the `quest:<name>` label, then open `quests/<name>.md`. If the ticket carries no quest label, or the label names no runbook, stop and say so; never improvise a runbook.
+3. **Follow the runbook.** Work its steps in order and call whatever skills it names. A quest is one session's work, start to finish: if the runbook outgrows the session, stop and say so rather than carrying state forward.
+4. **Record and hand back.** The quest is done when the runbook's completion criterion is met — not before. Record the outcome on the ticket (the tracker doc says where) and prepare whatever the runbook produces — a PR, a doc, a decision. Then stop. **The human closes the ticket**, usually once the output has landed; the agent never closes a quest.
+
+## Create a quest
+
+Invoked to file a new quest — "create a decision quest to ...".
+
+1. **Settle the type.** It comes from the user. If none fits, list the runbooks under `quests/` and ask. A missing type means a missing runbook, which the human writes; you file tickets, not runbooks.
+2. **Settle the objective.** The ticket's title and body state what this quest is for; agree them with the user before filing.
+3. **File the ticket**, labelled `quest:<type>`, per the tracker doc.
+4. **Report the ticket link** so the user can run the quest.
