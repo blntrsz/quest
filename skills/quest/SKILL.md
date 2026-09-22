@@ -21,7 +21,7 @@ Invoked with a ticket link (or number/path).
 1. **Fetch the ticket**, per the tracker doc.
 2. **Resolve its runbook.** Read the `quest:<name>` label, then open `quests/<name>.md`. If the ticket carries no quest label, or the label names no runbook, stop and say so; never improvise a runbook.
 3. **Follow the runbook.** Work its steps in order and call whatever skills it names. A quest is one session's work, start to finish: if the runbook outgrows the session, stop and say so rather than carrying state forward.
-4. **Record and hand back.** The quest is done when the runbook's completion criterion is met — not before. Record the outcome on the ticket (the tracker doc says where) and prepare whatever the runbook produces — a PR, a doc, a decision. Then stop. **The human closes the ticket**, usually once the output has landed; the agent never closes a quest.
+4. **Record and hand back.** The quest is done when the runbook's completion criterion is met — not before. Record the outcome on the ticket (the tracker doc says where) and prepare whatever the runbook produces — a PR, a doc, a decision. Then stop. **The human closes the ticket** once the output has landed, and the agent may close it too — but only after the human has explicitly approved closing it.
 
 ## Create a quest
 
