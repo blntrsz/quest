@@ -5,6 +5,10 @@ description: Load an ability, which describes how to do something. Only call it 
 
 An **ability** is a written capability: a procedure for doing one kind of thing, filed in this skill's `abilities/` folder as `abilities/<name>.md`.
 
+## Ability conventions
+
+Use a lowercase kebab-case filename and the same value for the YAML `name`. Include a single-line YAML `description`. Choose headings and steps to fit the ability's procedure.
+
 **Loading and running are separate acts.** Loading brings an ability into context so the agent knows what it can do — it never performs it. An ability runs only when the user says so explicitly: "run the babysit-pr ability". Never run an ability because it was loaded, because it looks relevant, or because the task merely resembles it.
 
 ## Load an ability
