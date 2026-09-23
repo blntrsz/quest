@@ -15,6 +15,7 @@ existing_names() {
   local path
   local names=()
   for path in "$dir"/*.md; do
+    [[ -L "$path" ]] && continue
     names+=("$(basename -- "$path" .md)")
   done
   if ((${#names[@]})); then
@@ -31,15 +32,23 @@ if (($# == 0)); then
 fi
 
 missing=()
+invalid=()
 for name in "$@"; do
-  if ! safe_name "$name" || [[ ! -f "$dir/$name.md" ]]; then
+  if ! safe_name "$name"; then
+    missing+=("$name")
+  elif [[ -L "$dir/$name.md" ]]; then
+    invalid+=("$name")
+  elif [[ ! -f "$dir/$name.md" ]]; then
     missing+=("$name")
   fi
 done
 
-if ((${#missing[@]})); then
-  for name in "${missing[@]}"; do
+if ((${#missing[@]} || ${#invalid[@]})); then
+  for name in "${missing[@]+"${missing[@]}"}"; do
     printf 'missing ability: %s\n' "$name" >&2
+  done
+  for name in "${invalid[@]+"${invalid[@]}"}"; do
+    printf 'invalid ability file (symbolic link): %s\n' "$name" >&2
   done
   existing_names >&2
   exit 1

@@ -1,13 +1,21 @@
 ---
 name: story
 description: Deliver one story ticket end to end, for work whose behaviour is worth agreeing before you build it. Read the wiki for what affects the ticket with the enrich ability, and agree the scenarios the human approves. Build them outside-in. Then review the result with the code-review, security-review, and unslop abilities, and fix every finding.
+abilities:
+  - enrich
+  - bdd
+  - outside-in-tdd
+  - tdd
+  - code-review
+  - security-review
+  - unslop
 ---
 
 Deliver the story on the ticket. Work from the wiki, and finish with a reviewed implementation.
 
-1. **Enrich from the wiki.** Load and run the **enrich** ability over the ticket. Report what the wiki holds that bears on the task, and carry it into the scenarios and the implementation. Done when every page that bears on the task is read and reported, or enrich has said plainly that the wiki holds nothing relevant.
-2. **Agree the tests before any code.** Load and run the **bdd** ability over the ticket's task. Write the scenarios that say what done looks like, in the user's language, and print them to the human. Wait for approval, and revise until they give it. Done when the human has approved the test scenarios. Write no production code before this.
-3. **Implement outside-in.** Load and run the **outside-in-tdd** ability. Write the first end-to-end test, then drive its inner red to green loop until the approved scenarios pass. Done when every approved scenario passes and the suite is green.
+1. **Enrich from the wiki.** Run the **enrich** ability over the ticket. Report what the wiki holds that bears on the task, and carry it into the scenarios and the implementation. Done when you have read and reported every relevant page, or the enrich ability reports that the wiki has no relevant pages.
+2. **Agree the tests before any code.** Run the **bdd** ability over the ticket's task. Write the scenarios that say what done looks like, in the user's language, and print them to the human. Wait for approval, and revise until they give it. Done when the human has approved the test scenarios. Write no production code before this.
+3. **Implement outside-in.** Follow the **outside-in-tdd** ability. Write the first end-to-end test, then drive its inner red to green loop until the approved scenarios pass. Done when every approved scenario passes and the suite is green.
 4. **Review the change in parallel.** Spawn one sub-agent per ability, all at once. Each one reports findings and changes nothing; you apply the fixes in step 5.
    - **code-review**, over the diff since the commit the task started from. It runs its own four axes.
    - **security-review**, over the changed code and the entry points that reach it.
