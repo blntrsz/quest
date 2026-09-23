@@ -58,4 +58,16 @@ describe("load scripts", () => {
         .text(),
     ).toMatchSnapshot();
   });
+
+  it("loads a quest by its bare type name", async () => {
+    const loadScript = resolve(root, "skills/quest/scripts/load.sh");
+    const bare = await $`${loadScript} decision`.cwd(root).quiet().text();
+    const suffixed = await $`${loadScript} decision-quest`.cwd(root).quiet().text();
+
+    expect(bare.startsWith('<quest name="decision">\n')).toBe(true);
+    expect(suffixed.startsWith('<quest name="decision-quest">\n')).toBe(true);
+    expect(bare).toBe(
+      suffixed.replace('<quest name="decision-quest">', '<quest name="decision">'),
+    );
+  });
 });

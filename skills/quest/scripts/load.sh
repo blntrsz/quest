@@ -30,9 +30,17 @@ if (($# == 0)); then
   usage
 fi
 
+names=("$@")
+resolved_paths=()
 missing=()
-for name in "$@"; do
-  if ! safe_name "$name" || [[ ! -f "$dir/$name.md" ]]; then
+for name in "${names[@]}"; do
+  if ! safe_name "$name"; then
+    missing+=("$name")
+  elif [[ -f "$dir/$name.md" ]]; then
+    resolved_paths+=("$dir/$name.md")
+  elif [[ -f "$dir/${name}-quest.md" ]]; then
+    resolved_paths+=("$dir/${name}-quest.md")
+  else
     missing+=("$name")
   fi
 done
@@ -45,8 +53,9 @@ if ((${#missing[@]})); then
   exit 1
 fi
 
-for name in "$@"; do
+for index in "${!names[@]}"; do
+  name=${names[$index]}
   printf '<quest name="%s">\n' "$name"
-  sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -- "$dir/$name.md"
+  sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' -- "${resolved_paths[$index]}"
   printf '</quest>\n'
 done

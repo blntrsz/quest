@@ -22,6 +22,7 @@ exports[`list scripts lists abilities as XML 1`] = `
 exports[`list scripts lists quests as XML 1`] = `
 "<quests>
 <quest name="decision">Grill the human about the ticket's plan or decision one question at a time until you share one understanding, then record the agreed design on the ticket. Use when a decision needs stress-testing before the work starts.</quest>
+<quest name="new-type">Add a quest type from an issue. Use when an issue requests a type that does not exist in this repo.</quest>
 <quest name="research">Investigate a question against high-trust primary sources, keeping what the wiki already holds, write the findings up with the writing ability, refine them with unslop, post them as a comment on the ticket for the human to review, then ingest them into the wiki. Use when the user wants a topic researched or docs and API facts gathered.</quest>
 <quest name="story">Deliver one story ticket end to end, for work whose behaviour is worth agreeing before you build it. Read the wiki for what affects the ticket with the enrich ability, and agree the scenarios the human approves. Build them outside-in. Then review the result with the code-review, security-review, and unslop abilities, and fix every finding.</quest>
 <quest name="task">Deliver one task ticket end to end by implementing it directly. Read the wiki for what affects the ticket with the enrich ability, then implement the task. Review the result with the code-review, security-review, and unslop abilities, and fix every finding. Use for a direct change with a clear done, or a bug fix.</quest>
@@ -1082,6 +1083,20 @@ Work one design tree. Every decision is a branch, and a decision hangs off the d
 6. **Stop when the tree is settled.** The interview is done when no open question remains. Every branch has been visited and nothing is left silently assumed. Do not act on the design until the human confirms you share one understanding. Done when the human confirms it.
 
 7. **Summarize and record.** Print the agreed design, the remaining risks, the assumptions, the rejected alternatives, and the next steps. Then record the outcome on the ticket, per the tracker doc. Done when the human has the summary and the ticket carries the outcome.
+</quest>
+<quest name="new-type-quest">
+---
+name: new-type
+description: Add a quest type from an issue. Use when an issue requests a type that does not exist in this repo.
+---
+
+Add a quest type from its issue. Get the user's approval before editing.
+
+1. **Read the issue.** Read the issue and its comments with the tracker instructions in \`docs/agents/issue-tracker.md\`. Record the requested type name, purpose, expected runbook behavior, and acceptance criteria. Check the type name against the naming rules in \`skills/quest/SKILL.md\`; ask for another name if it breaks them. Ask only about missing details that prevent the work. Done when the issue and the user's answers specify what to build.
+2. **Confirm the design.** Summarize the type name, runbook behavior, documentation changes, and tests. Wait for the user's approval before editing files. Done when the user approves the design.
+3. **Add the type.** Create \`skills/quest/quests/&lt;type&gt;-quest.md\` with frontmatter \`name: &lt;type&gt;\`, a concise description, ordered steps, and observable completion criteria. Document the type and how agents create it in \`skills/quest/SKILL.md\`. Check that \`skills/quest/scripts/load.sh &lt;type&gt;\` and \`skills/quest/scripts/load.sh &lt;type&gt;-quest\` both load the new runbook. Done when the runbook and skill guidance describe the type and both loader forms work.
+4. **Update and run tests.** Update the quest-list and loaded-runbook snapshots. Keep tests for bare and suffixed names in \`tests/list-scripts.test.js\`. Add tests only for type-specific behavior those tests do not cover. Run \`bun test tests/list-scripts.test.js\`. Done when the snapshots include the new type and the focused suite passes.
+5. **Record the result.** Comment on the issue with the files changed and test results, following \`docs/agents/issue-tracker.md\`. Leave the issue open for the human to close. Done when the issue comment lists the changes and results.
 </quest>
 <quest name="research-quest">
 ---

@@ -10,9 +10,9 @@ The ticket is the instance (this objective, this repo). The runbook is the metho
 
 ## Quest type and runbook
 
-A runbook is `quests/<type>-quest.md`; the quest type is the filename and frontmatter name without the `-quest` suffix. For example, `quests/decision-quest.md` has type `decision`, so its ticket label is `quest:decision`.
+A runbook is `quests/<type>-quest.md`; the quest type is the filename and frontmatter name without the `-quest` suffix. Type names use letters, digits, periods, underscores, and hyphens; they cannot be `.` or `..`, or end in `-quest`. The loader reserves that suffix for runbook names. For example, `quests/decision-quest.md` has type `decision`, so its ticket label is `quest:decision`.
 
-Load one or more runbooks with `skills/quest/scripts/load.sh <name> [<name>...]` from the repo root. List them with `skills/quest/scripts/list.sh`. Loading a runbook does not run the quest.
+Load one or more runbooks with `skills/quest/scripts/load.sh <name> [<name>...]` from the repo root. Use either the bare quest type (`decision`) or the suffixed runbook name (`decision-quest`). List types with `skills/quest/scripts/list.sh`. Loading a runbook does not run the quest.
 
 **How a ticket is created, fetched, and completed is tracker-specific.** The issue tracker should have been provided to you in `docs/agents/issue-tracker.md`. If it hasn't, stop and tell the user to run `/setup-adventure`. Read that doc before touching the tracker; its **Quest operations** section is the authority on this repo's mechanics.
 
@@ -29,7 +29,7 @@ Invoked with a ticket link (or number/path).
 
 Invoked to file a new quest — "create a decision quest to ...".
 
-1. **Settle the type.** It comes from the user. If none fits, run `skills/quest/scripts/list.sh` from the repo root and ask. It prints an `<quests>` element containing each quest type and description in filename order. A missing type means a missing runbook, which the human writes. You file tickets, not runbooks.
+1. **Settle the type.** Use the type the user names. If none fits, run `skills/quest/scripts/list.sh` from the repo root and ask whether to add one. It prints an `<quests>` element containing each quest type and description in filename order. For agent-led creation, file a `quest:new-type` ticket and run the quest. Follow its runbook to add the type.
 2. **Settle the objective.** The ticket's title and body state what this quest is for; agree them with the user before filing.
 3. **File the ticket**, labelled `quest:<type>` (without the runbook's `-quest` suffix), per the tracker doc.
 4. **Report the ticket link** so the user can run the quest.
