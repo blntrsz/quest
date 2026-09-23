@@ -11,7 +11,7 @@ An **ability** is a written capability: a procedure for doing one kind of thing,
 
 Invoked with an ability name — "load the babysit-pr ability".
 
-1. **Resolve it.** From the repo root, run `scripts/load.sh ability <name> [<name>...]`. The script prints one `<ability name="...">` element per name, in the order given. The element text is that file, with `&`, `<`, and `>` escaped. If any name does not resolve, the script prints no elements, exits non-zero, names each miss, and lists the names that exist. Stop there and never improvise an ability.
+1. **Resolve it.** From the repo root, run `scripts/load.sh ability <name> [<name>...]`. The script prints one `<ability name="...">` element per name, in the order given. The element text is that file. The script escapes `&`, `<`, and `>`. If any name does not resolve, the script prints no elements, exits non-zero, names each miss, and lists the names that exist. Stop there and never improvise an ability.
 2. **Report it.** Say what the ability does and what it needs in order to run. Then stop — offer to run it and wait for the explicit instruction.
 
 Loading is not a commitment to run. Several abilities can be loaded in one call. None of them runs until asked.
