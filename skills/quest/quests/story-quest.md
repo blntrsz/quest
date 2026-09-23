@@ -1,5 +1,5 @@
 ---
-name: story-quest
+name: story
 description: Deliver one story ticket end to end, for work whose behaviour is worth agreeing before you build it. Read the wiki for what affects the ticket with the enrich ability, and agree the scenarios the human approves. Build them outside-in. Then review the result with the code-review, security-review, and unslop abilities, and fix every finding.
 ---
 

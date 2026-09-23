@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Print the YAML frontmatter of every quest, in filename order.
+# Print every quest type and description as XML, in filename order.
 set -euo pipefail
 
 shopt -s nullglob
@@ -11,7 +11,7 @@ if (($# != 0)); then
   exit 2
 fi
 
-# Print the YAML frontmatter, including the --- lines.
+# Read the YAML frontmatter, including the --- lines.
 # Exit 2 if the first line is --- and no later line is ---.
 # Print nothing when the file has no frontmatter.
 read_frontmatter() {
@@ -24,19 +24,41 @@ read_frontmatter() {
 }
 
 names=()
-blocks=()
+quest_names=()
+descriptions=()
 open=()
 
 for path in "$dir"/*.md; do
   names+=("$(basename -- "$path" .md)")
 done
 if ((${#names[@]})); then
-  mapfile -t names < <(printf '%s\n' "${names[@]}" | LC_ALL=C sort)
+  sorted_names=()
+  while IFS= read -r name; do
+    sorted_names+=("$name")
+  done < <(printf '%s\n' "${names[@]}" | LC_ALL=C sort)
+  names=("${sorted_names[@]}")
 fi
 
 for name in "${names[@]+"${names[@]}"}"; do
   if block=$(read_frontmatter "$dir/$name.md"); then
-    blocks+=("$block")
+    if [[ -n "$block" ]]; then
+      quest_name=$(printf '%s\n' "$block" | awk '
+        /^name:[[:space:]]*/ {
+          sub(/^name:[[:space:]]*/, "")
+          print
+          exit
+        }
+      ')
+      description=$(printf '%s\n' "$block" | awk '
+        /^description:[[:space:]]*/ {
+          sub(/^description:[[:space:]]*/, "")
+          print
+          exit
+        }
+      ')
+      quest_names+=("$quest_name")
+      descriptions+=("$description")
+    fi
   else
     open+=("$name")
   fi
@@ -49,7 +71,21 @@ if ((${#open[@]})); then
   exit 1
 fi
 
-for block in "${blocks[@]+"${blocks[@]}"}"; do
-  [[ -n "$block" ]] || continue
-  printf '%s\n' "$block"
+xml_escape_text() {
+  printf '%s' "$1" | sed \
+    -e 's/&/\&amp;/g' \
+    -e 's/</\&lt;/g' \
+    -e 's/>/\&gt;/g'
+}
+
+xml_escape_attribute() {
+  xml_escape_text "$1" | sed -e 's/"/\&quot;/g'
+}
+
+printf '<quests>\n'
+for ((i = 0; i < ${#quest_names[@]}; i++)); do
+  name=$(xml_escape_attribute "${quest_names[$i]}")
+  description=$(xml_escape_text "${descriptions[$i]}")
+  printf '<quest name="%s">%s</quest>\n' "$name" "$description"
 done
+printf '</quests>\n'

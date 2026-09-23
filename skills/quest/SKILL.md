@@ -10,7 +10,7 @@ The ticket is the instance (this objective, this repo). The runbook is the metho
 
 ## Quest type and runbook
 
-A runbook is `quests/<name>.md`, and `<name>` is the quest type: `quests/decision-quest.md` is type `decision-quest`. A ticket declares its type with the label `quest:<name>`.
+A runbook is `quests/<type>-quest.md`; the quest type is the filename and frontmatter name without the `-quest` suffix. For example, `quests/decision-quest.md` has type `decision`, so its ticket label is `quest:decision`.
 
 Load one or more runbooks with `skills/quest/scripts/load.sh <name> [<name>...]` from the repo root. List them with `skills/quest/scripts/list.sh`. Loading a runbook does not run the quest.
 
@@ -29,7 +29,7 @@ Invoked with a ticket link (or number/path).
 
 Invoked to file a new quest — "create a decision quest to ...".
 
-1. **Settle the type.** It comes from the user. If none fits, run `skills/quest/scripts/list.sh` from the repo root and ask. A missing type means a missing runbook, which the human writes. You file tickets, not runbooks.
+1. **Settle the type.** It comes from the user. If none fits, run `skills/quest/scripts/list.sh` from the repo root and ask. It prints an `<quests>` element containing each quest type and description in filename order. A missing type means a missing runbook, which the human writes. You file tickets, not runbooks.
 2. **Settle the objective.** The ticket's title and body state what this quest is for; agree them with the user before filing.
-3. **File the ticket**, labelled `quest:<type>`, per the tracker doc.
+3. **File the ticket**, labelled `quest:<type>` (without the runbook's `-quest` suffix), per the tracker doc.
 4. **Report the ticket link** so the user can run the quest.

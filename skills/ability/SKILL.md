@@ -26,4 +26,4 @@ Only on an explicit run instruction — "run the babysit-pr ability", "run it".
 
 ## List abilities
 
-When asked what abilities exist, run `skills/ability/scripts/list.sh` from the repo root. It prints the YAML frontmatter of every ability, one block per file, in filename order. It does not print the body.
+When asked what abilities exist, run `skills/ability/scripts/list.sh` from the repo root. It prints an `<abilities>` element containing each ability's filename and description in filename order. It does not print the body.

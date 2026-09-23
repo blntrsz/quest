@@ -15,10 +15,10 @@ Infer the repo from `git remote -v`; `glab` does this automatically when run ins
 
 ## Quest operations
 
-Used by `/quest`. A **quest** is one issue labelled `quest:<name>`, where `<name>` is the runbook type.
+Used by `/quest`. A **quest** is one issue labelled `quest:<type>`. The type is the runbook name without its `-quest` suffix; for example, `quests/task-quest.md` uses `quest:task`.
 
-- **Create a quest**: `glab issue create --title "<objective>" --description "<context>" --label "quest:<name>"`. The title states the objective; the description carries whatever the runbook will need.
+- **Create a quest**: `glab issue create --title "<objective>" --description "<context>" --label "quest:<type>"`. The title states the objective; the description carries whatever the runbook will need.
 - **Fetch a quest**: `glab issue view <number> --comments`.
-- **List open quests**: `glab issue list -F json`, then keep issues carrying a `quest:<name>` label (or filter by `--label "quest:<name>"`).
+- **List open quests**: `glab issue list -F json`, then keep issues carrying a `quest:<type>` label (or filter by `--label "quest:<type>"`).
 - **Record the outcome**: `glab issue note <number> --message "<outcome>"`.
 - **Close**: the **human** closes quests, typically once the output has landed. The agent records the outcome and hands back; it does not run `glab issue close` on a quest.

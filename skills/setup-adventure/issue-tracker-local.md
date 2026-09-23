@@ -5,15 +5,15 @@ Quests for this repo live as markdown files under `.scratch/quests/`.
 ## Conventions
 
 - One quest per file: `.scratch/quests/<slug>.md`
-- A `Type:` line near the top records the runbook type (`quest:<name>` without the `quest:` prefix, e.g. `decision-quest`)
+- A `Type:` line near the top records the quest type (the runbook name without `-quest`, e.g. `decision` for `decision-quest.md`)
 - A `Status:` line records `open` / `done`
 - Outcome and conversation history append to the bottom under a `## Comments` heading
 
 ## Quest operations
 
-Used by `/quest`. A **quest** is one file with a `Type:` line naming its runbook.
+Used by `/quest`. A **quest** is one file with a `Type:` line naming its runbook type.
 
-- **Create a quest**: write `.scratch/quests/<slug>.md` (creating the directory if needed) with `Type: <name>` and `Status: open` near the top. The heading states the objective; the body carries whatever the runbook will need.
+- **Create a quest**: write `.scratch/quests/<slug>.md` (creating the directory if needed) with `Type: <type>` and `Status: open` near the top. The heading states the objective; the body carries whatever the runbook will need.
 - **Fetch a quest**: read the file at the referenced path.
 - **List open quests**: scan `.scratch/quests/` for files with `Status: open`.
 - **Record the outcome**: append it under `## Comments`.

@@ -1,5 +1,5 @@
 ---
-name: research-quest
+name: research
 description: Investigate a question against high-trust primary sources, keeping what the wiki already holds, write the findings up with the writing ability, refine them with unslop, post them as a comment on the ticket for the human to review, then ingest them into the wiki. Use when the user wants a topic researched or docs and API facts gathered.
 ---
 

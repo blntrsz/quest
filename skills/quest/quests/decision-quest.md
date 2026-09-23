@@ -1,5 +1,5 @@
 ---
-name: decision-quest
+name: decision
 description: Grill the human about the ticket's plan or decision one question at a time until you share one understanding, then record the agreed design on the ticket. Use when a decision needs stress-testing before the work starts.
 ---
 

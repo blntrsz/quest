@@ -1,5 +1,5 @@
 ---
-name: task-quest
+name: task
 description: Deliver one task ticket end to end by implementing it directly. Read the wiki for what affects the ticket with the enrich ability, then implement the task. Review the result with the code-review, security-review, and unslop abilities, and fix every finding. Use for a direct change with a clear done, or a bug fix.
 ---
 
