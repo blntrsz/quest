@@ -29,7 +29,7 @@ Invoked with a ticket link (or number/path).
 
 Use this section when the user asks to file a quest, such as "create a decision quest to ...".
 
-1. **Settle the type.** Use the type the user names. If no existing type fits, run `skills/quest/scripts/list.sh` from the repo root and ask whether to add one. It prints an `<quests>` element containing each type and its description. If the user wants a new type, ask them to run `/create-type` first.
+1. **Settle the type.** Use the type the user names. If no existing type fits, run `skills/quest/scripts/list.sh` from the repo root and ask whether to add one. It prints an `<quests>` element containing each type and its description. If the user wants a new type, ask them to run `/create-quest-type` first.
 2. **Settle the objective.** The ticket's title and body state what this quest is for; agree them with the user before filing.
 3. **File the ticket**, labelled `quest:<type>` (without the runbook's `-quest` suffix), per the tracker doc.
 4. **Report the ticket link** so the user can run the quest.
