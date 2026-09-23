@@ -1,31 +1,30 @@
 # Creating quest types
 
-The agreed design introduces a `new-type` quest for agent-led, end-to-end creation of additional quest types.
+Use the standalone `/create-type` skill to add a quest type. The skill lives at `skills/create-type/SKILL.md`; it is not a quest or runbook.
 
 ## Entry point
 
-Start from a GitHub issue labelled `quest:new-type`. The runbook is `skills/quest/quests/new-type-quest.md`, with frontmatter name `new-type`.
+The user invokes `/create-type` with a direct request or an issue. When the user supplies an issue, the skill reads it and its comments to determine what to build. It asks only about missing details that block the work, then waits for user approval before editing files.
 
 ## Workflow
 
-The issue is the source of truth. The agent asks focused questions only for blocking gaps, then presents the proposed design and waits for user confirmation before editing files.
+After the user approves, the agent:
 
-After confirmation, the agent:
+1. Add `skills/quest/quests/<type>-quest.md`, with the bare type in frontmatter.
+2. Keep the general instruction to use `/create-type` in `skills/quest/SKILL.md`. `list.sh` reads each type's name and description from runbook frontmatter, so individual types do not need duplicate registry entries.
+3. Verify that `skills/quest/scripts/load.sh` accepts both the bare type name and suffixed runbook name.
+4. Update the snapshots for quest listing and runbook loading, then run the focused tests.
+5. Record the result on the source issue when there is one, or hand the result back in chat.
 
-1. Adds the new runbook under `skills/quest/quests/`.
-2. Documents the type in `skills/quest/SKILL.md` and updates the authorship guidance to allow agent-led type creation.
-3. Ensures the runbook loader accepts both a bare type name (such as `decision`) and a suffixed runbook name (such as `decision-quest`), documents both forms, and tests compatibility.
-4. Updates the quest-list and loaded-runbook snapshots and runs the focused tests.
-5. Records the outcome on the issue; the human closes the quest.
+## Loader names
 
-## Design rationale
+The loader accepts both `decision` and `decision-quest`. Type names use letters, digits, periods, underscores, and hyphens; they cannot be `.` or `..`, or end in `-quest`. The suffix is reserved for runbook names.
 
-The workflow uses the ticket as its input rather than requiring a complete specification upfront. It still pauses for confirmation before changes, and it can own the supporting documentation, loader, and test updates as part of the same implementation.
+## History
 
-The loader currently mismatches the documented convention: quest labels use the bare type name, while the loader accepts suffixed runbook names. Both forms should remain supported, with regression coverage.
+Issue #9 replaced [quest #7's proposed `new-type` quest](raw/quest-7-new-type.md) with the standalone `/create-type` skill.
 
-A human-only checklist, human-only runbook authorship, requiring a complete specification before starting, and a documentation-only loader fix were not selected.
+## Sources
 
-## Source
-
-[Quest #7 reference](raw/quest-7-new-type.md)
+- [Issue #9 clarification](raw/quest-9-create-type.md)
+- [Original quest #7 design](raw/quest-7-new-type.md)
