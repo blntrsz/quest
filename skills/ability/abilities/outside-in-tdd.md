@@ -3,9 +3,7 @@ name: outside-in-tdd
 description: Drive a feature from the outside in — one failing end-to-end test, then the tdd ability's red → green loop inward until it passes. Use for a new user-facing feature, a defect a user can see, or when the user asks for outside-in TDD or the two-level loop.
 ---
 
-# Outside-in TDD
-
-Outside-in TDD moves from the user's door inward. The **outer loop** is one end-to-end test that states a user-visible feature and fails. The **inner loop** is the red → green cycle of the **tdd** ability, which builds only what that failure asks for. The end-to-end test steers. The inner loop builds. You are done when the end-to-end test passes.
+Use outside-in TDD to drive a user-facing feature from one failing end-to-end test inward through the **tdd** ability's red → green loop, until the end-to-end test passes. The **outer loop** states the feature from the user's door; the **inner loop** builds only what that failure asks for. The end-to-end test steers, and the inner loop builds.
 
 Load the **tdd** ability before the first inner cycle. It owns the test standard, the seams, the anti-patterns, and the loop rules.
 

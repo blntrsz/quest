@@ -3,9 +3,7 @@ name: wiki
 description: Curate docs/ as a Ryan Dahl style llm-wiki, a git-backed knowledge base whose index is docs/README.md, whose sources live in docs/raw/, and whose log is the commit history. Use to ingest a source, answer a question from the wiki, lint it for decay, or compact the pages that decayed.
 ---
 
-# Wiki
-
-An llm-wiki stores what a project learns in a git repository. An agent writes and maintains it, and a person reads it in an editor or on GitHub. The pattern is Andrej Karpathy's. Ryan Dahl adapted it to live inside a code repository, and this ability runs Dahl's adaptation.
+This ability maintains `docs/` as a Ryan Dahl-style llm-wiki: a git-backed knowledge base for what a project learns, written and maintained by an agent and read by a person in an editor or on GitHub. It ingests sources, answers questions from the wiki, finds decay, and compacts decayed pages. Its work is scoped to the wiki in `docs/`. The pattern is Andrej Karpathy's. Ryan Dahl adapted it to live inside a code repository, and this ability runs Dahl's adaptation.
 
 The wiki is a directory of pages, and the sources sit beside them. The root index is `docs/README.md`. Sources live in `docs/raw/` inside the same tree, so one clone holds a source and the pages that cite it, and a relative link from a page into `raw/` always resolves. The commit history is the log: every change is one commit, and the commit message is the log entry. Wikilinks resolve only inside note-taking apps, so pages link with relative markdown paths.
 

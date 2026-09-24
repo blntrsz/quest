@@ -1,19 +1,24 @@
 ---
 name: research
-description: Investigate a question against high-trust primary sources, keeping what the wiki already holds, write the findings up with the writing ability, refine them with unslop, post them as a comment on the ticket for the human to review, then ingest them into the wiki. Use when the user wants a topic researched or docs and API facts gathered.
+description: Research a ticket question from high-trust primary sources, starting with the wiki; prepare cited findings for human approval, post and ingest the approved findings, then hand the ticket back. Use when the user wants a topic researched or docs and API facts gathered.
 abilities:
   - wiki
   - writing
   - unslop
 ---
 
-Research the ticket's question against **primary sources**, starting with the wiki's existing content. Write the findings up, refine the prose, post the approved findings as a comment on the ticket, then ingest them into the wiki.
+Research the ticket's question against primary sources, starting with the wiki's existing content. Deliver approved, cited findings on the ticket and in the wiki, then hand the ticket back to the human.
 
-1. **Query the wiki first.** Load the **wiki** ability. Run its **Query** operation with the ticket's question. Report the pages consulted and what the wiki already contains. Reuse settled claims in the research instead of researching them again. Done when you have read the wiki's answer or confirmed that the wiki has no relevant information on the question.
-2. **Investigate against primary sources:** official docs, source code, specs, and first-party APIs, not a secondary write-up of them. Follow every claim back to the source that owns it. Done when every claim traces to the source that owns it.
-3. **Draft the findings as a Markdown comment on the ticket**, citing each claim's source. Run the **writing** ability over the draft, so it picks the right mode and reads on the first pass.
-4. **Print the research result to the human.**
-5. **Refine the prose.** Spawn a background sub-agent running the **unslop** ability over the draft. It reports each pattern it finds with its rewrite. Done when the sub-agent has reported.
-6. **Apply the refinements and print the final research for the human.** Post nothing until they approve; revise until they do.
-7. **Post the approved findings as a comment on the ticket**, only after human approval, and as a ticket comment rather than loose files in the repository.
-8. **Ingest the findings into the wiki.** Load the **wiki** ability. Run its **Ingest** operation with the ticket as the source. Add or update the ticket reference in `docs/raw/`. Update every page that the findings extend or correct. Add a new page to its directory index when needed. Done when the wiki contains the findings, every affected page links to the ticket reference, and you have committed the change.
+## Operating rules
+
+- Treat the wiki as the starting point and continuity record; verify findings against the primary sources that own the claims.
+- Never post research to the ticket until the human explicitly approves the final draft.
+
+1. **Query the wiki first.** Load the **wiki** ability and run its **Query** operation with the ticket's question. Report the pages consulted and what the wiki already contains. Reuse settled claims and identify gaps that need research. Done when you have read the relevant wiki content or confirmed there is none.
+2. **Investigate primary sources.** Use official documentation, source code, specifications, and first-party APIs—not secondary write-ups as evidence. Follow each finding to the source that owns it and collect citations. Done when every finding is supported by a primary source.
+3. **Draft and review the findings.** Prepare the findings as a Markdown ticket comment, citing the source for each claim. Run the **writing** ability over the draft so it selects the right mode and reads well on the first pass. Print the draft for the human. Done when the cited draft has been shared.
+4. **Refine the prose.** Spawn a background sub-agent to run the **unslop** ability over the draft; it reports each pattern it finds and its rewrite. Apply the refinements and print the final draft for the human. Done when the sub-agent has reported and the refined draft has been shared.
+5. **Get approval.** Wait for the human to approve the final draft. Revise and share it again until they approve. Done when the human has explicitly approved the version to post.
+6. **Post the approved findings.** Add them as a comment on the ticket, not as loose files in the repository. Done when the approved findings are posted.
+7. **Ingest the findings into the wiki.** Load the **wiki** ability and run its **Ingest** operation with the ticket as the source. Add or update the ticket reference in `docs/raw/`; update every page the findings extend or correct; add a new page to its directory index when needed. Commit the wiki changes. Done when the wiki contains the findings, every affected page links to the ticket reference, and the changes are committed.
+8. **Record the outcome and hand back.** Comment on the ticket per the issue-tracker instructions, including the research comment and wiki commit. Hand the ticket back; the human closes it. Done when the ticket records the outcome and is ready for the human to close.

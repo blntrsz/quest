@@ -3,8 +3,6 @@ name: reflect
 description: Read a finished piece of work, the current chat, a PR, a ticket, or a decision-quest chat, and turn it into what lasts: guards the next run obeys without being told, such as a format, lint, ast-grep, or architecture rule, plus the domain concepts and business rules for docs/concepts.md and any ADR the decisions earn. Proposes every guard and document, and waits for approval before creating it. Use after finishing work, for a retrospective, or when the user asks to reflect on a chat, a PR, a ticket, or a decision-quest.
 ---
 
-# Reflect
-
 Reflection reads a finished piece of work and writes down what it settled: guards that make repeat problems impossible, and the domain knowledge the next run inherits. It points backward at a chat, a PR, a ticket, or a decision-quest chat. It writes the rules and the docs, and it never rewrites the past work.
 
 The first unit is the **guard**: a rule that fails before a human notices the problem. The second is the **concept**: a domain term and the business rules that constrain it. A guard earns its place when the problem can recur and a machine can catch it. A concept earns its place when the work settled it and a newcomer would misread it. A reflection ends with the guards and docs it created, or a plain report that none was warranted.

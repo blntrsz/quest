@@ -3,7 +3,9 @@ name: writing
 description: Write and review prose a tired engineer understands on the first read — docs, RFCs, READMEs, PR descriptions, and commit messages — that an agent can also follow reliably. Use for any document a human or an agent reads.
 ---
 
-The goal is writing a tired engineer understands on the first read. Four layers get you there, one question each: what kind of document this is, how sentences address the reader, how much each sentence carries, and whether a sentence can be read two ways. Apply all four. When the reader is an agent, apply the **writing-for-agents** skill as well: its levers govern how the agent reaches and follows the document, these four layers govern the prose.
+Use this ability to write and review prose for humans and agents, including docs, RFCs, READMEs, PR descriptions, and commit messages. The goal is writing a tired engineer understands on the first read. Apply all four layers, one question each: what kind of document this is, how sentences address the reader, how much each sentence carries, and whether a sentence can be read two ways. When the reader is an agent, also apply the **writing-for-agents** skill. Its levers govern how the agent reaches and follows the document; these four layers govern the prose.
+
+## Operating rules
 
 Three rules sit above the layers:
 

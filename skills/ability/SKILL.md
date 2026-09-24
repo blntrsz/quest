@@ -9,6 +9,8 @@ An **ability** is a written capability: a procedure for doing one kind of thing,
 
 Use a lowercase kebab-case filename and the same value for the YAML `name`. Include a single-line YAML `description`. Choose headings and steps to fit the ability's procedure.
 
+Use `skills/create-ability/SKILL.md` for the authoring workflow. `TEMPLATE.md` provides an adaptable ability-file template with frontmatter and Markdown body, and `abilities/create-ability.md` explains how to shape the body. Keep repository-wide conventions here and task-specific instructions in each ability.
+
 **Loading and running are separate acts.** Loading brings an ability into context so the agent knows what it can do — it never performs it. An ability runs only when the user says so explicitly: "run the babysit-pr ability". Never run an ability because it was loaded, because it looks relevant, or because the task merely resembles it.
 
 ## Load an ability

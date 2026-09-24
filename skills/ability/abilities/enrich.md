@@ -3,9 +3,7 @@ name: enrich
 description: Read this repo's docs/ wiki for the material that bears on a context — a quest ticket, a task description, or the current chat — and report a synthesis, with a link to every page used and the source behind each claim. Enrich only reads. It never writes the wiki. Use before starting a task, to see what the wiki already settles.
 ---
 
-# Enrich
-
-Enrich reads this repo's wiki for a context and reports what the wiki holds about it. The context is a quest ticket, a task description, or the current chat. The report synthesizes the pages that bear on the context and links each one. The wiki records what the project has settled, so a run reads it before repeating work the wiki already answers.
+Enrich reads this repo's wiki for a context and reports what the wiki holds about it. The context is a quest ticket, a task description, or the current chat. The report synthesizes the pages that bear on the context and links each one. The wiki records what the project has settled, so a run reads it before repeating work the wiki already answers. Wiki reading is limited to `docs/`; Enrich never writes to the wiki.
 
 The wiki's rules live in the **wiki** ability. Enrich is its read side. Query answers a question you can phrase, and enrich answers a context you already hold. It reads the same pages the same way, and it ends with the report.
 
@@ -18,7 +16,7 @@ The wiki's rules live in the **wiki** ability. Enrich is its read side. Query an
 - Report in the chat. Post to the ticket only when the human asks.
 - Do not write to the wiki. A gap you find is a finding for the report, and ingest and compact belong to the **wiki** ability.
 
-## 1. Read the context
+## Read the context
 
 The context decides what to look for. It arrives as one of three things:
 
@@ -28,7 +26,7 @@ The context decides what to look for. It arrives as one of three things:
 
 When the ticket or the tracker doc does not resolve, stop and say so. Done when you can state in one sentence what the context asks for.
 
-## 2. Read the wiki
+## Read the wiki
 
 1. Read `docs/README.md`, then open the pages it lists and follow their relative links, as the **wiki** ability's Query step does.
 2. Note every page that bears on the context, and the sentence in it that does.
@@ -37,7 +35,7 @@ When the ticket or the tracker doc does not resolve, stop and say so. Done when 
 
 Done when every page that bears on the context is read, and every link you did not follow you set aside as not bearing on the context.
 
-## 3. Report
+## Output
 
 Write the report in the chat, in two parts:
 

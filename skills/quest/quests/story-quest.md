@@ -11,7 +11,7 @@ abilities:
   - unslop
 ---
 
-Deliver the story on the ticket. Work from the wiki, and finish with a reviewed implementation.
+Deliver one story ticket end to end: agree the observable behavior with the human before coding, then hand back a reviewed implementation.
 
 1. **Enrich from the wiki.** Run the **enrich** ability over the ticket. Report what the wiki holds that bears on the task, and carry it into the scenarios and the implementation. Done when you have read and reported every relevant page, or the enrich ability reports that the wiki has no relevant pages.
 2. **Agree the tests before any code.** Run the **bdd** ability over the ticket's task. Write the scenarios that say what done looks like, in the user's language, and print them to the human. Wait for approval, and revise until they give it. Done when the human has approved the test scenarios. Write no production code before this.
@@ -22,4 +22,4 @@ Deliver the story on the ticket. Work from the wiki, and finish with a reviewed 
    - **unslop**, over the prose the change added: docs, comments, the commit message, and any PR body. Report each pattern with its rewrite.
    Done when all three sub-agents have reported.
 5. **Fix every finding.** Work through each finding in turn. Fix it, or record why it is wrong or out of scope on the ticket. Rerun the approved scenarios and the full suite after the fixes. Done when the suite is green and no finding is left unaddressed.
-6. **Record the outcome and hand back.** Commit the implementation and the fixes. Record the outcome on the ticket, per the tracker doc. The human closes the ticket.
+6. **Commit, record the outcome, and hand back.** Commit the implementation and fixes. Record the outcome on the ticket per the tracker doc, then hand it back for the human to close. Done when the work is committed, the ticket outcome is recorded, and the ticket is handed back for closure.

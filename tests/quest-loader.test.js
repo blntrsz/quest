@@ -66,7 +66,7 @@ describe("quest loader ability declarations", () => {
     for (const name of ["enrich", "code-review", "security-review", "unslop"]) {
       expect(result.stdout).toContain(`<ability name="${name}">`);
     }
-    expect(result.stdout).toContain("# Enrich");
+    expect(result.stdout).toContain("\n\nEnrich reads this repo's wiki for a context");
   });
 
   it("rejects an invalid ability name before emitting the runbook", () => {

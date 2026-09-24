@@ -3,13 +3,14 @@ name: tdd
 description: The red → green loop, with the test standard that makes its tests worth keeping — where tests go, the anti-patterns, mocking at boundaries, and when to skip a test. Use for test-first work, a regression test, a red–green–refactor request, or from the outside-in-tdd ability.
 ---
 
-# TDD
-
-TDD is the red → green loop: write a failing test that states the behavior you want, then write only enough production code to pass it. The loop is easy. The discipline is in the tests it leaves behind, so read the sections below before and during a cycle, not after.
+Use this ability to deliver a behavior change through the red → green loop: write a failing test that states the behavior you want, then write only enough production code to pass it. It defines the test standard, workflow, and exceptions for test-first work; read the sections below before and during a cycle, not after.
 
 For a user-facing feature, the **outside-in-tdd** ability wraps this loop in an end-to-end test and calls it as the inner loop.
 
-Before you write a test, read `CONTEXT.md` when the project has one, so names match the project's language. Respect the ADRs in the area you touch.
+## Operating rules
+
+- Before you write a test, read `CONTEXT.md` when the project has one, so names match the project's language.
+- Respect the ADRs in the area you touch.
 
 ## The loop
 

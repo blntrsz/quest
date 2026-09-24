@@ -3,11 +3,7 @@ name: bdd
 description: Turn a feature into concrete examples in the user's language — Given–When–Then scenarios that a person and a test runner both read. Use when the user mentions BDD, Gherkin, Given-When-Then, example mapping, or living documentation, or when the outside-in-tdd end-to-end test should read as a scenario.
 ---
 
-# BDD
-
-Behavior-Driven Development turns a feature into concrete examples written in the user's own language, then checks the system against them. The examples are a specification while you build, and documentation after you ship.
-
-The work runs as three practices, in order: **Discovery**, **Formulation**, **Automation**. Discovery pays for the other two. Skip it, and you automate examples nobody agreed to.
+Use this ability to turn a feature into concrete examples written in the user's own language, then check the system against them. The examples are a specification while you build, and documentation after you ship. The work runs as three practices, in order: **Discovery**, **Formulation**, **Automation**. Discovery pays for the other two. Skip it, and you automate examples nobody agreed to.
 
 The outer loop of the **outside-in-tdd** ability is one of these examples made executable. Write the scenario first, watch it fail, then build inward with the **tdd** ability.
 

@@ -3,11 +3,14 @@ name: security-review
 description: Scan a codebase or path for security vulnerabilities the way a researcher would — trace user input to dangerous sinks, self-verify every finding, and propose patches for human approval. Use for "is my code secure", a security audit, injection or XSS, hardcoded secrets, authentication and access-control bugs, or vulnerable dependencies.
 ---
 
-# Security review
+Review a user-specified path or the whole project from its root for security vulnerabilities, tracing user input through the application and self-verifying each finding. Produce a severity-ranked report and concrete patch proposals for CRITICAL and HIGH findings. The review only reads and reasons; it changes nothing, and a human applies any proposed patch.
 
-Reason about the code the way a security researcher does. Understand the context, trace how user input moves through the application, and verify each finding before you report it. Pattern matching misses the vulnerabilities that only show up across files. This review follows the data.
+Reason about the code the way a security researcher does. Understand the context and follow data across files; pattern matching alone misses vulnerabilities that only emerge from the full flow.
 
-The review reads and reasons. It changes nothing. Every patch is a proposal a human applies.
+## Operating rules
+
+- Scan the path the user named, or the whole project from its root.
+- Do not change files. Every patch is a proposal for human approval.
 
 ## Workflow
 
@@ -72,14 +75,16 @@ For a large codebase, fan the deep scan out to parallel sub-agents, one per area
 | **LOW** | Best-practice violation, low direct risk | Verbose errors, missing headers |
 | **INFO** | Worth noting, not a vulnerability | Outdated dependency with no CVE |
 
-## Report shape
+## Output
+
+### Report shape
 
 - Lead with a findings summary table: counts by severity.
 - Group findings by category, not by file.
 - For each finding, give the file path, the line, the vulnerable snippet, the risk in plain English (what could an attacker do with this?), a confidence rating of High, Medium, or Low, and the severity.
 - When the codebase is clean, say so plainly: "No vulnerabilities found", with what was scanned.
 
-## Propose patches
+### Propose patches
 
 For every CRITICAL and HIGH finding, show the vulnerable code, show the fixed code, and explain what changed and why. Preserve the original code style, variable names, and structure, and add an inline comment that explains the fix.
 

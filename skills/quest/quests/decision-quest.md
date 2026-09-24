@@ -1,34 +1,35 @@
 ---
 name: decision
-description: Grill the human about the ticket's plan or decision one question at a time, record the approved design, then hand it back for closure or continue with a task or story implementation.
+description: Resolve an issue's decision through a guided interview, record the approved outcome, then hand it back or start implementation.
 ---
 
-Grill the human about the ticket's decision until you share one understanding, then record the agreed design on the ticket.
+Guide the human through the issue's open decision, record the confirmed outcome, and either hand the issue back for closure or transition it into implementation.
 
-Work one design tree. Every decision is a branch, and a decision hangs off the decisions it depends on. Hold the tree in your head: what is settled, what is open, what each open question waits on, and what you have assumed without asking.
+Treat the discussion as one decision tree: each decision is a branch, and dependent decisions wait on their prerequisites. Track what is settled, what remains open, what each question depends on, and any assumptions that have not been checked.
 
-1. **Ask one question at a time.** Ask the one open question that matters most, then wait for the answer. Never ask a question whose answer depends on one that is still open; save it for a later turn. Each answer settles a branch, reshapes the tree, and reveals the next question. Done when the human has answered the question you asked.
+## Operating rules
 
-2. **Recommend an answer to every question.** Ask each question in this shape:
+- Ask one question at a time, choosing the most important open question whose prerequisites are settled. Wait for the answer before asking another.
+- Recommend an answer and explain why for every question. Present each in this shape:
 
-   ❓ **<question title>**: <the question, with its options if there are any>
+  ❓ **<question title>**: <the question, with its options if there are any>
 
-   ➡️ <your recommended answer, and the reason for it>
+  ➡️ <your recommended answer, and the reason for it>
 
-   When a user-input tool fits the question and the options are few and mutually exclusive, use it. Otherwise ask in plain text. Done when every question carries a recommendation and a reason.
+- When the question has a few mutually exclusive options, use a user-input tool if it fits; otherwise ask in plain text.
+- Find environmental facts yourself. Dispatch a sub-agent when a question depends on a fact, and do not block the interview on a running search if other questions can proceed.
+- As relevant, cover goals and non-goals, users and stakeholders, constraints, alternatives, APIs and interfaces, data model, error handling, security, observability, testing, migration and rollout, failure modes, operational ownership, and success criteria.
+- Challenge vague, unsupported, or contradictory answers with a follow-up before moving on.
 
-3. **Find the facts yourself.** When a question needs a fact from the environment, dispatch a sub-agent to find it. Never ask the human for anything you can look up. Do not block the interview on a running search; ask the questions that do not depend on it now. Done when every fact the tree needs has a source.
+1. **Interview the decision tree.** Work through the open branches under the operating rules, preserving dependencies between questions. Each answer may settle a branch, reshape the tree, or reveal the next question. Done when no open branch or unchecked assumption remains, every needed fact has a source, and each relevant topic has been addressed or ruled out.
 
-4. **Consider the usual topics.** As each one becomes relevant, ask about goals and non-goals, users and stakeholders, constraints, alternatives, APIs and interfaces, the data model, error handling, security, observability, testing, migration and rollout, failure modes, operational ownership, and success criteria. Done when every topic that bears on the decision has been asked about or ruled out.
+2. **Confirm the shared understanding.** Once the tree is settled, tell the human your understanding and ask them to confirm it. If they correct it, reopen the affected branch and continue the interview. Do not act on the design before they confirm. Done when the human confirms you share one understanding.
 
-5. **Challenge weak answers.** If an answer is vague, unsupported, or contradicts an earlier answer, ask a follow-up before you move on. Done when no branch rests on an unresolved assumption.
+3. **Get approval of the written outcome.** Present the agreed design, remaining risks, assumptions, rejected alternatives, and next steps. Wait for the human to approve this summary; incorporate requested changes and seek approval before recording. Done when the human approves the summary.
 
-6. **Stop when the tree is settled.** The interview is done when no open question remains. Every branch has been visited and nothing is left silently assumed. Do not act on the design until the human confirms you share one understanding. Done when the human confirms it.
+4. **Record the approved outcome.** Follow `docs/agents/issue-tracker.md` and post the approved outcome as a comment on the same issue. Done when the issue carries the approved outcome.
 
-7. **Summarize and record.** Print the agreed design, the remaining risks, the assumptions, the rejected alternatives, and the next steps. Wait for the human to approve the summary, then record the approved outcome on the ticket, per the tracker doc. Done when the human has approved the summary and the ticket carries the outcome.
+5. **Choose the next step.** After recording the outcome, ask whether the human wants to finish with the decision or implement it. Recommend the path that best matches their stated goal and explain why. Done when the human has chosen a path.
 
-8. **Choose the next step.** After the approved outcome is recorded, ask the human whether to finish with the decision or implement it. Recommend the path that best matches their stated goal and explain why. Done when the human has chosen a path.
-   - **Finish with the decision:** hand the ticket back for the human to close, following the tracker doc. Approval of the design is not a request for the agent to close the ticket. Done when the approved decision is recorded and handed back.
-   - **Implement it:** choose the implementation type from the ticket's scope. Use **task** for a direct, clearly bounded change or bug fix; use **story** when the behavior is worth agreeing through scenarios before building. If the scope does not clearly fit one, ask one question at a time and recommend a type. Done when the appropriate type is settled.
-     1. On the same issue, remove the `quest:decision` label and add `quest:<type>`, where `<type>` is `task` or `story`.
-     2. Load that runbook with `skills/quest/scripts/load.sh <type>` from the repo root. Follow it in order, using the approved decision recorded on the issue as context. Done when the selected runbook is loaded and its workflow is underway.
+   - **Finish with the decision:** hand the issue back for the human to close, following the tracker doc. The agent records and hands back; it does not close the quest. Done when the approved decision is recorded and handed back.
+   - **Implement it:** use **task** for a direct, clearly bounded change or bug fix; use **story** when the behavior should be agreed through scenarios before building. If the scope does not clearly fit either type, ask one question at a time and recommend a type. On the same issue, remove `quest:decision` and add `quest:<type>`, where `<type>` is `task` or `story`. From the repo root, load the runbook with `skills/quest/scripts/load.sh <type>` and follow it in order, using the approved decision on the issue as context. Done when the selected runbook is loaded and its workflow is underway.

@@ -3,9 +3,7 @@ name: unslop
 description: Cut AI tells from any writing. The patterns below are the catalog, and each comes with its fix. Apply to every piece of prose this repo produces, or when a doc reads as AI generated.
 ---
 
-# Unslop
-
-Edit text to remove the patterns below. Treat this as a lens for every piece of prose the repo writes, not as a separate pass at the end. Apply it while writing, and again before you hand the text over.
+Remove the writing patterns below from prose in this repo while preserving its meaning and intended tone. Apply this ability to every piece of prose as you write and again before handoff, not as a separate final pass.
 
 ## Process
 
