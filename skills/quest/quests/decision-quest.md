@@ -1,6 +1,6 @@
 ---
 name: decision
-description: Grill the human about the ticket's plan or decision one question at a time until you share one understanding, then record the agreed design on the ticket. Use when a decision needs stress-testing before the work starts.
+description: Grill the human about the ticket's plan or decision one question at a time, record the approved design, then hand it back for closure or continue with a task or story implementation.
 ---
 
 Grill the human about the ticket's decision until you share one understanding, then record the agreed design on the ticket.
@@ -25,4 +25,10 @@ Work one design tree. Every decision is a branch, and a decision hangs off the d
 
 6. **Stop when the tree is settled.** The interview is done when no open question remains. Every branch has been visited and nothing is left silently assumed. Do not act on the design until the human confirms you share one understanding. Done when the human confirms it.
 
-7. **Summarize and record.** Print the agreed design, the remaining risks, the assumptions, the rejected alternatives, and the next steps. Then record the outcome on the ticket, per the tracker doc. Done when the human has the summary and the ticket carries the outcome.
+7. **Summarize and record.** Print the agreed design, the remaining risks, the assumptions, the rejected alternatives, and the next steps. Wait for the human to approve the summary, then record the approved outcome on the ticket, per the tracker doc. Done when the human has approved the summary and the ticket carries the outcome.
+
+8. **Choose the next step.** After the approved outcome is recorded, ask the human whether to finish with the decision or implement it. Recommend the path that best matches their stated goal and explain why. Done when the human has chosen a path.
+   - **Finish with the decision:** hand the ticket back for the human to close, following the tracker doc. Approval of the design is not a request for the agent to close the ticket. Done when the approved decision is recorded and handed back.
+   - **Implement it:** choose the implementation type from the ticket's scope. Use **task** for a direct, clearly bounded change or bug fix; use **story** when the behavior is worth agreeing through scenarios before building. If the scope does not clearly fit one, ask one question at a time and recommend a type. Done when the appropriate type is settled.
+     1. On the same issue, remove the `quest:decision` label and add `quest:<type>`, where `<type>` is `task` or `story`.
+     2. Load that runbook with `skills/quest/scripts/load.sh <type>` from the repo root. Follow it in order, using the approved decision recorded on the issue as context. Done when the selected runbook is loaded and its workflow is underway.
