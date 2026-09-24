@@ -8,7 +8,6 @@ This directory is the project's wiki. An agent maintains it, and a person reads 
 - [pstack](pstack.md): architecture, workflow, coordination model, and tradeoffs.
 - [Creating quest types](quest-types.md): how to add quest types with `/create-quest-type`.
 - [Superpowers](superpowers.md): how the agentic framework works, its workflow, and its tradeoffs.
-- [Ability](ability.md): how abilities are defined, loaded, and run.
 
 ## Sources
 
