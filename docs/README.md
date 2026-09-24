@@ -16,3 +16,4 @@ This directory is the project's wiki. An agent maintains it, and a person reads 
 - [Issue #9 clarification: standalone type-creation skill](raw/quest-9-create-type.md): instructions for adding quest types with `/create-quest-type`.
 - [Research quest #13: pstack](raw/quest-13-pstack.md): source reference for the pstack research page.
 - [Research quest #12: Superpowers](raw/quest-12-superpowers.md): source reference for the Superpowers research page.
+- [Research quest #14: Compound Engineering](raw/quest-14-compound-engineering.md): source reference for the Compound Engineering research page.

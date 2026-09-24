@@ -1,0 +1,53 @@
+# Ability
+
+> Source: [user-provided ability skill](raw/ability-skill.md)
+
+<skill_content name="ability">
+# Skill: ability
+
+An **ability** is a written capability: a procedure for doing one kind of thing, filed in this skill's `abilities/` folder as `abilities/<name>.md`.
+
+## Ability conventions
+
+Use a lowercase kebab-case filename and the same value for the YAML `name`. Include a single-line YAML `description`. Choose headings and steps to fit the ability's procedure.
+
+**Loading and running are separate acts.** Loading brings an ability into context so the agent knows what it can do — it never performs it. An ability runs only when the user says so explicitly: "run the babysit-pr ability". Never run an ability because it was loaded, because it looks relevant, or because the task merely resembles it.
+
+## Load an ability
+
+Invoked with an ability name — "load the babysit-pr ability".
+
+1. **Resolve it.** From the repo root, run `skills/ability/scripts/load.sh <name> [<name>...]`. The script prints one `<ability name="...">` element per name, in the order given. The element text is that file. The script escapes `&`, `<`, and `>`. If any name does not resolve, the script prints no elements, exits non-zero, names each miss, and lists the names that exist. Stop there and never improvise an ability.
+2. **Report it.** Say what the ability does and what it needs in order to run. Then stop — offer to run it and wait for the explicit instruction.
+
+Loading is not a commitment to run. Several abilities can be loaded in one call. None of them runs until asked.
+
+## Run an ability
+
+Only on an explicit run instruction — "run the babysit-pr ability", "run it".
+
+1. **Be sure it's loaded.** If the ability is not already in context, run `skills/ability/scripts/load.sh <name>` from the repo root first.
+2. **Follow it.** Work its steps in order, calling whatever skills, tools, or sub-agents it names.
+3. **Finish it.** An ability is one session's work: if it outgrows the session, stop and say so rather than carrying state forward. Report what it produced and stop at its last step.
+
+## List abilities
+
+When asked what abilities exist, run `skills/ability/scripts/list.sh` from the repo root. It prints an `<abilities>` element containing each ability's filename and description in filename order. It does not print the body.
+
+Base directory for this skill: /home/dev/projects/quest/skills/ability
+Relative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.
+Note: file list is sampled.
+
+<skill_files>
+<file>/home/dev/projects/quest/skills/ability/abilities/babysit-pr.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/bdd.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/code-review.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/create-ability.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/create-verification-skill.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/enrich.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/maintain-verification-skill.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/outside-in-tdd.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/reflect.md</file>
+<file>/home/dev/projects/quest/skills/ability/abilities/security-review.md</file>
+</skill_files>
+</skill_content>
