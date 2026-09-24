@@ -3,7 +3,7 @@ name: writing
 description: Write and review prose a tired engineer understands on the first read — docs, RFCs, READMEs, PR descriptions, and commit messages — that an agent can also follow reliably. Use for any document a human or an agent reads.
 ---
 
-Use this ability to write and review prose for humans and agents, including docs, RFCs, READMEs, PR descriptions, and commit messages. The goal is writing a tired engineer understands on the first read. Apply all four layers, one question each: what kind of document this is, how sentences address the reader, how much each sentence carries, and whether a sentence can be read two ways. When the reader is an agent, also apply the **writing-for-agents** skill. Its levers govern how the agent reaches and follows the document; these four layers govern the prose.
+Use this ability to write and review prose for humans and agents, including docs, RFCs, READMEs, PR descriptions, and commit messages. The goal is writing a tired engineer understands on the first read. Apply all four layers, one question each: what kind of document this is, how sentences address the reader, how much each sentence carries, and whether a sentence can be read two ways. For documents agents read, also apply the rules in "Write instructions agents can follow." Those rules govern how the agent reaches and follows the document; the four layers govern the prose.
 
 ## Operating rules
 
@@ -95,16 +95,15 @@ Source: asd-ste100.org (Issue 9, 2025), fetched 2026-07-18. The numbered rules a
 
 Source: Kohl, The Global English Style Guide (SAS Press). Guideline text fetched from the Internet Archive and the SAS sample chapter, 2026-07-18.
 
-## Documents agents read
+## Write instructions agents can follow
 
-When the reader is an agent — a skill, `AGENTS.md` / `CLAUDE.md`, or a doc reached by a context pointer — apply the **writing-for-agents** skill alongside this standard. It carries the levers this standard does not:
+Use these rules for skills, `AGENTS.md`, `CLAUDE.md`, and docs an agent reaches through a context pointer.
 
-- **Context pointers** and the branches they trigger on.
-- The **two loads**, context and cognitive.
-- The **information hierarchy** and progressive disclosure.
-- **Leading words** and pruning.
-
-The four layers above still govern the prose. The agent levers govern how the agent reaches the document and follows it.
+- **Point to the right context.** Name the exact file or section. State when the agent should read it, and what to do next. Replace broad pointers such as "see the docs" with a link to the relevant material.
+- **Control both kinds of load.** Context load is the text the agent must read before it can act. Cognitive load is the effort it takes to understand the text and choose what to do. Keep required context near the instruction. Link background. Make choices, conditions, and branches explicit.
+- **Order information by importance.** Put rules that always apply and the next action first. Put conditional directions under headings that name their conditions. Link detailed reference material instead of making every reader work through it.
+- **Lead with the instruction.** Start an action with a verb. Start a branch with its condition, such as "If" or "When". State restrictions directly, such as "Do not edit generated files".
+- **Prune what does not guide the agent.** Remove repeated rules, background that does not change the next action, and links without a clear purpose.
 
 ## Voice and repo specifics
 
@@ -135,3 +134,4 @@ Apply every item to any prose this standard covers. Item 1 applies only to docum
 6. Does each thing have exactly one name across the docs?
 7. Would a developer say these words out loud? Replace invented metaphors and fancy synonyms with the plain word or the real symbol name.
 8. Are all symbols, paths, and counts real at this commit, with the commands that regenerate the counts?
+9. For agent-facing documents, do pointers name their target and trigger? Do always-applicable rules come before conditional details? Can the agent tell what to do next without reading unrelated background?
