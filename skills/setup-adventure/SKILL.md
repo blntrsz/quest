@@ -1,6 +1,6 @@
 ---
 name: setup-adventure
-description: Configure this repo for Quests — set up the issue tracker they live on. Run once before first use of /quest.
+description: Configure this repo's issue tracker for quests and adventures. Run once before first use of /quest or /adventure.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Scaffold the per-repo configuration the Adventure skills assume:
 
-- **Issue tracker**: where quests live (GitHub by default; local markdown is also supported out of the box)
+- **Issue tracker**: where quests and adventures are tracked (GitHub by default; local markdown is also supported out of the box)
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
@@ -31,14 +31,14 @@ Lead the section with the recommended answer so the user can accept it in a word
 
 **Section A: Issue tracker.**
 
-> Explainer: The "issue tracker" is where quests live for this repo. `/quest` reads a quest ticket to find its runbook, and files new quests as tickets. It needs to know whether to call `gh issue create`, write a markdown file under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
+> Explainer: The "issue tracker" records quests and adventures for this repo. `/quest` reads quest tickets to find their runbooks, and `/adventure` creates and coordinates linked quest tickets. These skills need to know whether to call `gh issue create`, write markdown files under `.scratch/`, or follow some other workflow you describe. Pick the place you actually track work for this repo.
 
 Default posture: GitHub if a `git remote` points at GitHub; GitLab (`gitlab.com` or a self-hosted host) if it points at GitLab. Otherwise (or if the user prefers), offer:
 
-- **GitHub**: quests live in the repo's GitHub Issues (uses the `gh` CLI)
-- **GitLab**: quests live in the repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
-- **Local markdown**: quests live as files under `.scratch/quests/` in this repo (good for solo projects or repos without a remote)
-- **Other** (Jira, Linear, etc.): ask the user to describe the workflow in one paragraph; record it as freeform prose
+- **GitHub**: track quests in this repo's GitHub Issues (uses the `gh` CLI)
+- **GitLab**: track quests in this repo's GitLab Issues (uses the [`glab`](https://gitlab.com/gitlab-org/cli) CLI)
+- **Local markdown**: track quests in `.scratch/quests/` (good for solo projects or repos without a remote)
+- **Other** (Jira, Linear, etc.): ask how the tracker creates, reads, links, orders, claims, comments on, and closes quests and adventures. Record Quest and Adventure operations as freeform prose, including how it represents parentage, dependencies, and trusted handoffs.
 
 Record the choice in `docs/agents/issue-tracker.md`, using the seed template for the chosen tracker.
 
@@ -70,7 +70,7 @@ The block:
 
 ### Issue tracker
 
-[one-line summary of where quests are tracked]. See `docs/agents/issue-tracker.md`.
+[one-line summary of where quests and adventures are tracked]. See `docs/agents/issue-tracker.md`.
 ```
 
 Then write `docs/agents/issue-tracker.md` using the seed template in this skill folder:
@@ -79,8 +79,8 @@ Then write `docs/agents/issue-tracker.md` using the seed template in this skill 
 - [issue-tracker-gitlab.md](./issue-tracker-gitlab.md): GitLab issue tracker
 - [issue-tracker-local.md](./issue-tracker-local.md): local-markdown issue tracker
 
-For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description.
+For "other" issue trackers, write `docs/agents/issue-tracker.md` from scratch using the user's description. Include both Quest operations and Adventure operations so `/quest` and `/adventure` can follow the same tracker contract.
 
 ### 5. Done
 
-Tell the user setup is complete, and that `/quest` will now read and write tickets via `docs/agents/issue-tracker.md`. Mention they can edit that file directly later; re-running this skill is only necessary to switch trackers.
+Tell the user setup is complete, and that `/quest` and `/adventure` will now read and write tracker items via `docs/agents/issue-tracker.md`. Mention they can edit that file directly later; re-running this skill is only necessary to switch trackers.
