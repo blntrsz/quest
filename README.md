@@ -38,6 +38,7 @@ Start a new agent session after installation. To update installed skills later, 
 
 ## Skills in this repository
 
+- `questmaster` routes users to the right ability, quest, or adventure workflow.
 - `quest` — create and execute a quest.
 - `adventure` — create an adventure issue, coordinate linked quests, and run a ready quest.
 - `setup-adventure` — configure the issue tracker for quests and adventures.
