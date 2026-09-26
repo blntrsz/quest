@@ -15,7 +15,7 @@ Use `skills/create-ability/SKILL.md` for the authoring workflow. `TEMPLATE.md` p
 
 Do not run an ability just because it looks relevant or the task resembles it. A mention of an ability is not enough on its own; the requested task must clearly call for its procedure or output.
 
-For example, "load the writing ability" is load-only. "Load create-verification-skill and update the story quest to use the verification skill it creates" asks for the ability's output and the follow-up edit, so run the ability and continue with the edit.
+For example, "load the writing ability" is load-only. "Load create-verification and update the story quest to use the verification skill it creates" asks for the ability's output and the follow-up edit, so run the ability and continue with the edit.
 
 ## Load an ability
 

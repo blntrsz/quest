@@ -1,6 +1,6 @@
 ---
-name: create-verification-skill
-description: Generate a project-local verification skill that drives every surface of a project — UI, API, MCP, CLI — the way a user does, and proves a change at the highest level that reaches it. Use for /create-verification-skill, "make a control skill for this repo", or when a project has no scripted way to prove UI, API, MCP, or CLI behavior.
+name: create-verification
+description: Generate a project-local verification guide for UI, API, MCP, and CLI, then prove a change at the highest level that reaches it. Use for /create-verification or when a project lacks scripted end-to-end verification.
 ---
 
 This ability generates a project-local skill at `.agents/skills/verify-<project>/` that gives the next agent a scripted way to drive the project's real surfaces and prove behavior: launch a surface, exercise a feature the way a user would, and capture evidence. Every project needs this; the next agent reads the skill cold, mid-task, and has never seen the project. Write for that agent, not for a human.
@@ -113,4 +113,4 @@ Fix what fails. After every failed iteration, run the generated cleanup too, so 
 
 ## 5. Hand over
 
-Report the path to `.agents/skills/verify-<project>/`, the surfaces it covers with their levels, and the one feature you proved. Name the level rule so the user sees how quest verification will pick a surface. Point the user at `maintain-verification-skill` for keeping the map honest as the app changes; suggest a cadence only if the user asks.
+Report the path to `.agents/skills/verify-<project>/`, the surfaces it covers with their levels, and the one feature you proved. Name the level rule so the user sees how quest verification will pick a surface. Point the user at `maintain-verification` for keeping the map honest as the app changes; suggest a cadence only if the user asks.

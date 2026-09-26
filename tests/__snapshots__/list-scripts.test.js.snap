@@ -6,9 +6,9 @@ exports[`list scripts lists abilities as XML 1`] = `
 <ability name="bdd">Turn a feature into concrete examples in the user's language — Given–When–Then scenarios that a person and a test runner both read. Use when the user mentions BDD, Gherkin, Given-When-Then, example mapping, or living documentation, or when the outside-in-tdd end-to-end test should read as a scenario.</ability>
 <ability name="code-review">Review the changes since a fixed point on four axes — Standards (the repo's documented conventions), Spec (the originating issue), Correctness (bugs, regressions, and test gaps), and Design (structural quality and missed simplifications). Runs the axes as parallel sub-agents, reports them side by side, and changes nothing. Use to review a branch, a PR, work in progress, or "review since X".</ability>
 <ability name="create-ability">Explain how to shape an ability's Markdown body around its job, using the repository template as a starting point. Use when drafting ability content.</ability>
-<ability name="create-verification-skill">Generate a project-local verification skill that drives every surface of a project — UI, API, MCP, CLI — the way a user does, and proves a change at the highest level that reaches it. Use for /create-verification-skill, "make a control skill for this repo", or when a project has no scripted way to prove UI, API, MCP, or CLI behavior.</ability>
+<ability name="create-verification">Generate a project-local verification guide for UI, API, MCP, and CLI, then prove a change at the highest level that reaches it. Use for /create-verification or when a project lacks scripted end-to-end verification.</ability>
 <ability name="enrich">Read this repo's docs/ wiki for the material that bears on a context — a quest ticket, a task description, or the current chat — and report a synthesis, with a link to every page used and the source behind each claim. Enrich only reads. It never writes the wiki. Use before starting a task, to see what the wiki already settles.</ability>
-<ability name="maintain-verification-skill">Periodic pass that keeps a project's verification skill and feature map honest across every surface — UI, API, MCP, CLI — with parallel source readers per feature, one live session driving each surface, and at most one PR of proven corrections. Use for /maintain-verification-skill or "audit the verify skill".</ability>
+<ability name="maintain-verification">Audit and correct a project's verification guide and feature map across UI, API, MCP, and CLI, using source review and live checks. Use for /maintain-verification or periodic verification audits.</ability>
 <ability name="outside-in-tdd">Drive a feature from the outside in — one failing end-to-end test, then the tdd ability's red → green loop inward until it passes. Use for a new user-facing feature, a defect a user can see, or when the user asks for outside-in TDD or the two-level loop.</ability>
 <ability name="reflect">Read a finished piece of work, the current chat, a PR, a ticket, or a decision-quest chat, and turn it into what lasts: guards the next run obeys without being told, such as a format, lint, ast-grep, or architecture rule, plus the domain concepts and business rules for docs/concepts.md and any ADR the decisions earn. Proposes every guard and document, and waits for approval before creating it. Use after finishing work, for a retrospective, or when the user asks to reflect on a chat, a PR, a ticket, or a decision-quest.</ability>
 <ability name="security-review">Scan a codebase or path for security vulnerabilities the way a researcher would — trace user input to dangerous sinks, self-verify every finding, and propose patches for human approval. Use for "is my code secure", a security audit, injection or XSS, hardcoded secrets, authentication and access-control bugs, or vulnerable dependencies.</ability>
@@ -274,10 +274,10 @@ Existing abilities include step-by-step workflows, operating rules, reference ma
 
 Do not copy every optional section into every ability. The common contract is clear metadata, a clear capability, and instructions shaped to that capability. Headings, examples, approval gates, output formats, and completion sections are tools to use when the work calls for them.
 </ability>
-<ability name="create-verification-skill">
+<ability name="create-verification">
 ---
-name: create-verification-skill
-description: Generate a project-local verification skill that drives every surface of a project — UI, API, MCP, CLI — the way a user does, and proves a change at the highest level that reaches it. Use for /create-verification-skill, "make a control skill for this repo", or when a project has no scripted way to prove UI, API, MCP, or CLI behavior.
+name: create-verification
+description: Generate a project-local verification guide for UI, API, MCP, and CLI, then prove a change at the highest level that reaches it. Use for /create-verification or when a project lacks scripted end-to-end verification.
 ---
 
 This ability generates a project-local skill at \`.agents/skills/verify-&lt;project&gt;/\` that gives the next agent a scripted way to drive the project's real surfaces and prove behavior: launch a surface, exercise a feature the way a user would, and capture evidence. Every project needs this; the next agent reads the skill cold, mid-task, and has never seen the project. Write for that agent, not for a human.
@@ -390,7 +390,7 @@ Fix what fails. After every failed iteration, run the generated cleanup too, so 
 
 ## 5. Hand over
 
-Report the path to \`.agents/skills/verify-&lt;project&gt;/\`, the surfaces it covers with their levels, and the one feature you proved. Name the level rule so the user sees how quest verification will pick a surface. Point the user at \`maintain-verification-skill\` for keeping the map honest as the app changes; suggest a cadence only if the user asks.
+Report the path to \`.agents/skills/verify-&lt;project&gt;/\`, the surfaces it covers with their levels, and the one feature you proved. Name the level rule so the user sees how quest verification will pick a surface. Point the user at \`maintain-verification\` for keeping the map honest as the app changes; suggest a cadence only if the user asks.
 </ability>
 <ability name="enrich">
 ---
@@ -441,13 +441,13 @@ When the human asks, post the report as one comment on the ticket the run starte
 
 Done when the report states the synthesis, links every page used from the repo root, names the source behind each claim, and separates what the wiki holds from what it does not.
 </ability>
-<ability name="maintain-verification-skill">
+<ability name="maintain-verification">
 ---
-name: maintain-verification-skill
-description: Periodic pass that keeps a project's verification skill and feature map honest across every surface — UI, API, MCP, CLI — with parallel source readers per feature, one live session driving each surface, and at most one PR of proven corrections. Use for /maintain-verification-skill or "audit the verify skill".
+name: maintain-verification
+description: Audit and correct a project's verification guide and feature map across UI, API, MCP, and CLI, using source review and live checks. Use for /maintain-verification or periodic verification audits.
 ---
 
-This ability maintains a skill generated by \`create-verification-skill\`, or any project-local verification skill with a feature map, by checking every feature against source and live behavior and correcting proven verification-skill drift. It produces one reported outcome—\`clean\`, \`changed\`, or \`blocked\`—and at most one PR of proven corrections. Work is limited to the verification skill's own directory; never edit product code during a run.
+This ability maintains a skill generated by \`create-verification\`, or any project-local verification skill with a feature map, by checking every feature against source and live behavior and correcting proven verification-skill drift. It produces one reported outcome—\`clean\`, \`changed\`, or \`blocked\`—and at most one PR of proven corrections. Work is limited to the verification skill's own directory; never edit product code during a run.
 
 The verification skill maps several surfaces — UI, API, MCP, CLI — and ranks them by level. Maintenance keeps that map honest too: a feature still reachable, still on the surface the map names, still provable at the level the map declares. The unit of rigor is the feature, not every sentence: cover every feature file from source and exercise every feature live, without a live drive for every bullet.
 
@@ -465,7 +465,7 @@ Edit only the verification skill's own directory — its \`SKILL.md\`, \`feature
 
 ## Pass
 
-0. **Locate the target.** Find the verification skill to maintain: the project-local skill whose body has launch and drive sections, a surface registry, and a feature map (usually \`.agents/skills/verify-*/\`). Several candidates → ask which one. None → stop and point at \`create-verification-skill\` instead of inventing a target.
+0. **Locate the target.** Find the verification skill to maintain: the project-local skill whose body has launch and drive sections, a surface registry, and a feature map (usually \`.agents/skills/verify-*/\`). Several candidates → ask which one. None → stop and point at \`create-verification\` instead of inventing a target.
 
 1. **Index hygiene.** Read the feature map README and glob its sibling files. Fix missing, extra, duplicate, or dead entries. Lightweight; no generated inventory.
 
